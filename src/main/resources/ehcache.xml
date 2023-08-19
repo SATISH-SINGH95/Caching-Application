@@ -1,0 +1,21 @@
+<ehcache xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="ehcache.xsd"
+         updateCheck="true" 
+         monitoring="autodetect"
+         dynamicConfig="true">
+
+    <!-- <diskStore path="java.io.tmpdir"/> -->
+    <diskStore path="user.dir"/>    // with this, logs of cache will be stored in the current project itself with cacheName provided by you.
+
+     <cache name="users"
+           maxEntriesLocalHeap="10"
+           maxEntriesLocalDisk="10"
+           eternal="false"
+           diskSpoolBufferSizeMB="20"
+           timeToIdleSeconds="3000"
+           timeToLiveSeconds="6000"
+           memoryStoreEvictionPolicy="LFU"
+           transactionalMode="off">
+        <persistence strategy="localTempSwap"/>    // It means when you when re run the application all the previous cache data will be deleted automatically and new cache data will be stored.
+    </cache>
+</ehcache>
