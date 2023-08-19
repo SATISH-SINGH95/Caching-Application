@@ -30,4 +30,6 @@ public class SwaggerConfigProperties {
 //    private String externalDocTitle;
 //
 //    private String externalDocUrl;
+
+// comment
 }
