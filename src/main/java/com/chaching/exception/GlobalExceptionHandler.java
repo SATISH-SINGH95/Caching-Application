@@ -58,6 +58,12 @@ public class GlobalExceptionHandler{
 
     }
 
+    @ExceptionHandler(UserNotFoundException.class)
+    public ResponseEntity<Object> userNotFoundException(UserNotFoundException ex){
+        ErrorDetails errorDetails = new ErrorDetails(ex.getStatus(), ex.getMessage(), LocalDateTime.now());
+        return new ResponseEntity<Object>(errorDetails, errorDetails.getStatus());
+    }
+
     
 
 

@@ -17,13 +17,22 @@ import lombok.NoArgsConstructor;
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "USER_CREDENTIALS")
-public class LoginCredentials {
+@Table(name = "USER_LOGIN_CREDENTIALS")
+public class UserLoginCredentials {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "USER_INFO_ID")
+    @Column(name = "LOGIN_ID")
     private long loginId;
+
+    @Column(name = "FIRST_NAME")
+    private String firstName;
+
+    @Column(name = "LAST_NAME")
+    private String lastName;
+
+    @Column(name = "USERNAME")
+    private String userName;
 
     @Column(name = "EMAIL")
     private String email;
@@ -32,7 +41,7 @@ public class LoginCredentials {
     private String password;
 
     @Column(name = "STATUS")
-    private String status;
+    private Boolean status;
 
     @Column(name = "ROLE")
     private String role;
@@ -42,8 +51,5 @@ public class LoginCredentials {
 
     @Column(name = "UPDATED_DATE")
     private LocalDateTime updatedDate;
-
-    @Column(name = "OTP")
-    private long otp;
 
 }
