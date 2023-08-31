@@ -53,7 +53,7 @@ public class UserInfoController {
     @PostMapping("/create")
 	@Operation(summary = "Create UserInfo details", description = "Endpoint to create UserInfo Details")
 	@ApiResponse(responseCode = HttpURLConnection.HTTP_CREATED + "", description = "CREATED", content = {
-		@Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = UserInfoRequestObject.class)) })
+		@Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = UserInfoResponseObject.class)) })
 	public ResponseEntity<UserInfoResponseObject> createEmployee(
 		@Parameter(name = "UserInfoRequestObject", description = "UserInfoRequestObject is required", required = true, schema = @Schema(implementation = UserInfoRequestObject.class)) @RequestBody @Valid UserInfoRequestObject userInfoRequestObject)
 	{
@@ -66,7 +66,7 @@ public class UserInfoController {
     @GetMapping("/id/{userInfoId}")
 	@Operation(summary = "Get single userInfo detail", description = "Endpoint to Get single userInfo Detail")
 	@ApiResponse(responseCode = HttpURLConnection.HTTP_OK + "", description = "OK", content = {
-		@Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = Long.class)) })
+		@Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = UserInfoResponseObject.class)) })
 	public ResponseEntity<UserInfoResponseObject> getSingleEmployee(
 		@Parameter(name = "userInfoId", description = "userInfoId is required", required = true, schema = @Schema(implementation = Long.class)) @PathVariable final Long userInfoId)
 		{
@@ -79,7 +79,7 @@ public class UserInfoController {
 	@GetMapping("/user/userStatus/{userStatus}")
 	@Operation(summary = "Get all userInfo detail based on userStatus", description = "Endpoint to Get userInfo detail based on userStatus")
 	@ApiResponse(responseCode = HttpURLConnection.HTTP_OK + "", description = "OK", content = {
-		@Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = String.class)) })
+		@Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = UserInfoResponse.class)) })
 	public ResponseEntity<UserInfoResponse> getAllUserInfoBasedOnUserStatus(
 		@Parameter(name = "userStatus", description = "userStatus is required", required = true, schema = @Schema(implementation = String.class)) @PathVariable final String userStatus
 	){
@@ -95,7 +95,7 @@ public class UserInfoController {
 	@GetMapping("/")
 	@Operation(summary = "Get all userInfo details", description = "Endpoint to Get userInfo details")
 	@ApiResponse(responseCode = HttpURLConnection.HTTP_OK + "", description = "OK", content = {
-		@Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = Object.class)) })
+		@Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = PageResponse.class)) })
 	public ResponseEntity<PageResponse> getAllUserInfos(
 		@RequestParam(value = "pageNo", defaultValue = "0", required = false) int pageNo,
 		@RequestParam(value = "pageSize", defaultValue = "10", required = false) int pageSize,
@@ -111,7 +111,7 @@ public class UserInfoController {
 	@PutMapping("/id/{userInfoId}")
 	@Operation(summary = "Update User Info", description = "Endpoint to Update User Info")
 	@ApiResponse(responseCode = HttpURLConnection.HTTP_OK + "", description = "OK", content = {
-		@Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = Object.class)) })
+		@Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = UserInfoResponseObject.class)) })
 	public ResponseEntity<UserInfoResponseObject> updateUSerInfo(
 		@Parameter(name = "userInfoId", description = "userInfoId is required", required = true, schema = @Schema(implementation = Long.class)) @PathVariable final Long userInfoId,
 		@Parameter(name = "UserInfoRequestObject", description = "UserInfoRequestObject is required", required = true, schema = @Schema(implementation = UserInfoRequestObject.class)) @RequestBody @Valid UserInfoRequestObject userInfoRequestObject)
@@ -125,7 +125,7 @@ public class UserInfoController {
 	@PatchMapping("/id/{userInfoId}")
 	@Operation(summary = "Make user Inactive", description = "Endpoint to Make user Inactive")
 	@ApiResponse(responseCode = HttpURLConnection.HTTP_OK + "", description = "OK", content = {
-		@Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = Object.class)) })
+		@Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = String.class)) })
 	public ResponseEntity<String> markUserAsInactive(
 		@Parameter(name = "userInfoId", description = "userInfoId is required", required = true, schema = @Schema(implementation = Long.class)) @PathVariable final Long userInfoId)
 		{
@@ -138,7 +138,7 @@ public class UserInfoController {
 	@DeleteMapping("/id/{userInfoId}")
 	@Operation(summary = "Delete userInfo detail", description = "Endpoint to Delete userInfo detail")
 	@ApiResponse(responseCode = HttpURLConnection.HTTP_OK + "", description = "OK", content = {
-		@Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = Long.class)) })
+		@Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = String.class)) })
 	public ResponseEntity<String> deleteUserInfoDetail(
 		@Parameter(name = "userInfoId", description = "userInfoId is required", required = true, schema = @Schema(implementation = Long.class)) @PathVariable final Long userInfoId)
 		{

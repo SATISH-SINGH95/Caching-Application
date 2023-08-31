@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.chaching.constants.UserInfoConstants;
+import com.chaching.exception.ErrorDetails;
 import com.chaching.model.request.UserLoginCredentialRequest;
 import com.chaching.service.UserLoginCredentailService;
 
@@ -22,9 +23,18 @@ import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 
 @RestController
 @RequestMapping("/user")
+@Tag(name = "Login-Credential", description = "Login-Credential endpoints")
+@ApiResponses(value = { @ApiResponse(responseCode = HttpURLConnection.HTTP_NOT_FOUND
+                + "", description = "Not Found", content = @Content(schema = @Schema(implementation = ErrorDetails.class))),
+                @ApiResponse(responseCode = HttpURLConnection.HTTP_BAD_REQUEST
+                                + "", description = "Bad Request", content = @Content(schema = @Schema(implementation = ErrorDetails.class))),
+                @ApiResponse(responseCode = HttpURLConnection.HTTP_INTERNAL_ERROR
+                                + "", description = "Internal Server Error", content = @Content(schema = @Schema(implementation = ErrorDetails.class))) })
 public class UserLoginCredentailController {
 
     @Autowired

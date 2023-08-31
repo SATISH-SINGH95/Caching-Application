@@ -46,6 +46,15 @@ public class SecurityConfig {
         return authenticationManagerBuilder.build();
     }
 
+    public static final String[] AUTH_URLS = {
+        "/api/v1/auth/**",
+        "/v3/api-docs/**",
+        "/v3/api-docs.yaml",
+        "/swagger-ui/**",
+        "/swagger-ui.html"
+
+    };
+
      @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
@@ -54,7 +63,8 @@ public class SecurityConfig {
                     try {
                         csrf.disable()
                                  .authorizeHttpRequests()
-                                 .antMatchers("/user/create/**", "/token", "/swagger-ui/index.html").permitAll()
+                                 .antMatchers("/user/create/**", "/token").permitAll()
+                                 .antMatchers(AUTH_URLS).permitAll()
                                  .anyRequest()
                                  .authenticated();
                     } catch (Exception e) {
