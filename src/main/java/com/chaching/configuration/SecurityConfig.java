@@ -54,7 +54,7 @@ public class SecurityConfig {
                     try {
                         csrf.disable()
                                  .authorizeHttpRequests()
-                                 .antMatchers("/user/create/**", "/token").permitAll()
+                                 .antMatchers("/user/create/**", "/token", "/swagger-ui/index.html").permitAll()
                                  .anyRequest()
                                  .authenticated();
                     } catch (Exception e) {
