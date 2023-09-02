@@ -48,7 +48,7 @@ public class UserLoginCredentailController {
         @Parameter(name = "userLoginCredentialRequest", description = "userLoginCredentialRequest is required", required = true, schema = @Schema(implementation = UserLoginCredentialRequest.class)) @RequestBody @Valid UserLoginCredentialRequest userLoginCredentialRequest)
     {
         userLoginCredentailService.createUser(userLoginCredentialRequest);
-        return new ResponseEntity<String>(UserInfoConstants.Message.MESSAGE_USER_REGISTERED_SUCCESSFULLY, HttpStatus.CREATED);
+        return new ResponseEntity<String>(UserInfoConstants.MESSAGE_USER_REGISTERED_SUCCESSFULLY, HttpStatus.CREATED);
     }
     
 }

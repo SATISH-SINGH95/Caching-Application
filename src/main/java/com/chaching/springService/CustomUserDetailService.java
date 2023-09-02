@@ -26,7 +26,7 @@ public class CustomUserDetailService implements UserDetailsService{
             return new CustomUserDetail(user);
         }
         else{
-            throw new UserNotFoundException(HttpStatus.NOT_FOUND, UserInfoConstants.Message.MESSAGE_USER_NOT_FOUND);
+            throw new UserNotFoundException(HttpStatus.NOT_FOUND, UserInfoConstants.MESSAGE_USER_NOT_FOUND);
         }
 
     }

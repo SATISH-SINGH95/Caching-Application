@@ -2,7 +2,6 @@ package com.chaching.constants;
 
 public class UserInfoConstants {
 
-    public static class Message{
 
     public static final String MESSAGE_USER_INFO_NOT_FOUND = "USER_INFO_NOT_FOUND";
     public static final String MESSAGE_USER_NOT_FOUND = "USER_NOT_FOUND";
@@ -15,8 +14,6 @@ public class UserInfoConstants {
     public static final String MESSAGE_USER_ALREADY_EXIST = "USER_ALREADY_EXIST";
     public static final String MESSAGE_USER_REGISTERED_SUCCESSFULLY = "USER_REGISTERED_SUCCESSFULLY";
 
-
-    }
 
     
 

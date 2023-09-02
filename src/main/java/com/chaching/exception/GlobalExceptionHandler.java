@@ -44,16 +44,14 @@ public class GlobalExceptionHandler{
         errorMap.put(error.getField(), error.getDefaultMessage());
        });
 
-       ErrorDetails errorDetails = new ErrorDetails(HttpStatus.BAD_REQUEST, errorMap, LocalDateTime.now());
-        return new ResponseEntity<Object>(errorDetails, HttpStatus.BAD_REQUEST);
+       MethodArgumentError error = new MethodArgumentError(HttpStatus.BAD_REQUEST, errorMap, LocalDateTime.now());
+        return new ResponseEntity<Object>(error, HttpStatus.BAD_REQUEST);
     }  
-
 
     @ExceptionHandler(BadRequestException.class)
     public ResponseEntity<Object> badRequestExceptionMethod(BadRequestException ex){
         ErrorDetails errorDetails = new ErrorDetails(ex.getStatus(), ex.getMessage(), LocalDateTime.now());
         return new ResponseEntity<Object>(errorDetails, errorDetails.getStatus());
-
     }
 
     @ExceptionHandler(AttachmentNotFoundException.class)
@@ -67,7 +65,6 @@ public class GlobalExceptionHandler{
     public ResponseEntity<Object> invalidFileNameExceptionMethod(InvalidFileNameException ex){
         ErrorDetails errorDetails = new ErrorDetails(ex.getStatus(), ex.getMessage(), LocalDateTime.now());
         return new ResponseEntity<Object>(errorDetails, errorDetails.getStatus());
-
     }
 
     @ExceptionHandler(UserNotFoundException.class)
@@ -76,9 +73,4 @@ public class GlobalExceptionHandler{
         return new ResponseEntity<Object>(errorDetails, errorDetails.getStatus());
     }
 
-    
-
-
-    
-    
 }

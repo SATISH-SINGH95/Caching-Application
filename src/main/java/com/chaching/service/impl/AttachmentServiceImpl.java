@@ -28,13 +28,13 @@ public class AttachmentServiceImpl implements AttachmentService{
         String fileName = StringUtils.cleanPath(file.getOriginalFilename());
         try {
             if(fileName.contains("..")){
-                throw new InvalidFileNameException(HttpStatus.BAD_REQUEST, UserInfoConstants.Message.INVALID_FILE_NAME);
+                throw new InvalidFileNameException(HttpStatus.BAD_REQUEST, UserInfoConstants.INVALID_FILE_NAME);
             }
             Attachment attachment = new Attachment(fileName, file.getContentType(), file.getBytes());
             return attachmentRepository.save(attachment);
             
         } catch (Exception e) {
-            throw new InvalidFileNameException(HttpStatus.BAD_REQUEST, UserInfoConstants.Message.INVALID_FILE_NAME); 
+            throw new InvalidFileNameException(HttpStatus.BAD_REQUEST, UserInfoConstants.INVALID_FILE_NAME); 
             
         }
         
@@ -44,7 +44,7 @@ public class AttachmentServiceImpl implements AttachmentService{
     public Attachment getAttachment(String fileId) {
 
         return attachmentRepository.findById(fileId).orElseThrow(
-            ()-> new AttachmentNotFoundException(HttpStatus.NOT_FOUND, UserInfoConstants.Message.ATTACHMENT_NOT_FOUND)
+            ()-> new AttachmentNotFoundException(HttpStatus.NOT_FOUND, UserInfoConstants.ATTACHMENT_NOT_FOUND)
         );
         
     }

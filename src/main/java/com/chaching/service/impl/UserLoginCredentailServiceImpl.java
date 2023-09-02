@@ -28,7 +28,7 @@ public class UserLoginCredentailServiceImpl implements UserLoginCredentailServic
     public void createUser(UserLoginCredentialRequest userLoginCredentialRequest) {
 
         if(userLoginCredentialRepository.existsByUserName(userLoginCredentialRequest.getUserName())){
-            throw new BadRequestException(HttpStatus.BAD_REQUEST, UserInfoConstants.Message.MESSAGE_USER_ALREADY_EXIST);
+            throw new BadRequestException(HttpStatus.BAD_REQUEST, UserInfoConstants.MESSAGE_USER_ALREADY_EXIST);
         }
 
         UserLoginCredentials userLoginCredentials = new UserLoginCredentials();

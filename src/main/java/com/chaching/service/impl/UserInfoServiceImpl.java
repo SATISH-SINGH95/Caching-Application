@@ -45,7 +45,7 @@ public class UserInfoServiceImpl implements UserInfoService{
         userInfo.setUsername(userInfoRequestObject.getUsername());
         userInfo.setUserEmail(userInfoRequestObject.getUserEmail());
         userInfo.setUserAddress(userInfoRequestObject.getUserAddress());
-        userInfo.setUserStatus(UserInfoConstants.Message.USER_STATUS_ACTIVE);
+        userInfo.setUserStatus(UserInfoConstants.USER_STATUS_ACTIVE);
         userInfo.setCreatedDate(LocalDateTime.now());
 
         UserInfo savedEntity = userInfoRepository.save(userInfo);
@@ -69,13 +69,13 @@ public class UserInfoServiceImpl implements UserInfoService{
         List<UserInfo> userInfoEntities = null;
 
         if(userStatus == null){
-            throw new BadRequestException(HttpStatus.BAD_REQUEST,UserInfoConstants.Message.MESSAGE_INVALID_REQUEST);
+            throw new BadRequestException(HttpStatus.BAD_REQUEST,UserInfoConstants.MESSAGE_INVALID_REQUEST);
         }
         
         userInfoEntities = userInfoRepository.findByUserStatus(userStatus);
 
         if(userInfoEntities == null || userInfoEntities.isEmpty()){
-            throw new EntityNotFoundException(HttpStatus.NOT_FOUND, UserInfoConstants.Message.MESSAGE_USER_INFO_NOT_FOUND);
+            throw new EntityNotFoundException(HttpStatus.NOT_FOUND, UserInfoConstants.MESSAGE_USER_INFO_NOT_FOUND);
         }
 
         List<UserInfoResponseObject> listOfRequestObjects = userInfoEntities.stream().map(userEntity -> userEntity.getAsObject()).collect(Collectors.toList());
@@ -96,7 +96,7 @@ public class UserInfoServiceImpl implements UserInfoService{
         List<UserInfo> userInfos = page.getContent();
         
         if(userInfos == null || userInfos.isEmpty()){
-            throw new EntityNotFoundException(HttpStatus.NOT_FOUND, UserInfoConstants.Message.MESSAGE_USER_INFO_NOT_FOUND);
+            throw new EntityNotFoundException(HttpStatus.NOT_FOUND, UserInfoConstants.MESSAGE_USER_INFO_NOT_FOUND);
         }
 
         List<UserInfoResponseObject> listOfRequestObjects = userInfos.stream().map(userEntity -> userEntity.getAsObject()).collect(Collectors.toList());
@@ -124,7 +124,7 @@ public class UserInfoServiceImpl implements UserInfoService{
         UserInfoResponseObject userInfoResponseObject = null;
 
         UserInfo userInfo = userInfoRepository.findById(userInfoId).orElseThrow(
-            () -> new EntityNotFoundException(HttpStatus.NOT_FOUND, UserInfoConstants.Message.MESSAGE_USER_INFO_ID_NOT_FOUND));
+            () -> new EntityNotFoundException(HttpStatus.NOT_FOUND, UserInfoConstants.MESSAGE_USER_INFO_ID_NOT_FOUND));
 
         if(userInfo != null){
             userInfoResponseObject = userInfo.getAsObject();
@@ -142,7 +142,7 @@ public class UserInfoServiceImpl implements UserInfoService{
         UserInfoResponseObject userInfoResponseObject = null;
 
         UserInfo user = userInfoRepository.findById(userInfoId).orElseThrow(
-            () -> new EntityNotFoundException(HttpStatus.NOT_FOUND, UserInfoConstants.Message.MESSAGE_USER_INFO_ID_NOT_FOUND));
+            () -> new EntityNotFoundException(HttpStatus.NOT_FOUND, UserInfoConstants.MESSAGE_USER_INFO_ID_NOT_FOUND));
         
         user.setUpdateDate(LocalDateTime.now());
         user.setUserAddress(userInfoRequestObject.getUserAddress());
@@ -162,7 +162,7 @@ public class UserInfoServiceImpl implements UserInfoService{
         log.debug("deleteUserInfo start | userInfoId = {}", userInfoId);
 
         UserInfo userInfo = userInfoRepository.findById(userInfoId).orElseThrow(
-            () -> new EntityNotFoundException(HttpStatus.NOT_FOUND, UserInfoConstants.Message.MESSAGE_USER_INFO_ID_NOT_FOUND));
+            () -> new EntityNotFoundException(HttpStatus.NOT_FOUND, UserInfoConstants.MESSAGE_USER_INFO_ID_NOT_FOUND));
         userInfoRepository.delete(userInfo);
 
         log.debug("deleteUserInfo end ", "User Deleted Successfully");
@@ -175,9 +175,9 @@ public class UserInfoServiceImpl implements UserInfoService{
         log.debug("makeUserInactive start | userStatus {}", "User is Active !");
 
         UserInfo userInfo = userInfoRepository.findById(userInfoId).orElseThrow(
-            () -> new EntityNotFoundException(HttpStatus.NOT_FOUND, UserInfoConstants.Message.MESSAGE_USER_INFO_ID_NOT_FOUND));
+            () -> new EntityNotFoundException(HttpStatus.NOT_FOUND, UserInfoConstants.MESSAGE_USER_INFO_ID_NOT_FOUND));
 
-        userInfo.setUserStatus(UserInfoConstants.Message.USER_STATUS_INACTIVE);
+        userInfo.setUserStatus(UserInfoConstants.USER_STATUS_INACTIVE);
         userInfo.setUpdateDate(LocalDateTime.now());
         userInfoRepository.save(userInfo);
         log.debug("makeUserInactive end | userStatus {}", "User is Inactive now !");
