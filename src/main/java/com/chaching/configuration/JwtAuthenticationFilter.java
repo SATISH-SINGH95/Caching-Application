@@ -18,7 +18,10 @@ import org.springframework.web.filter.OncePerRequestFilter;
 import com.chaching.helper.JwtUtil;
 import com.chaching.springService.CustomUserDetailService;
 
+import lombok.extern.slf4j.Slf4j;
+
 @Component
+@Slf4j
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     @Autowired
@@ -57,6 +60,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
 
             } else {
+                log.debug("Token is not validated!");
                 System.out.println("Token is not validated !! ");
             }
 
