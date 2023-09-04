@@ -11,6 +11,7 @@ import com.chaching.constants.EmployeeConstants;
 import com.chaching.exception.EmployeeNotFoundException;
 import com.chaching.model.entity.Employee;
 import com.chaching.model.request.EmployeeRequestObject;
+import com.chaching.model.response.EmployeeResponse;
 import com.chaching.model.response.EmployeeResponseObject;
 import com.chaching.repository.EmployeeRepository;
 import com.chaching.service.EmployeeService;
@@ -63,8 +64,10 @@ public class EmployeeServiceImpl implements EmployeeService{
     }
 
     @Override
-    public List<EmployeeResponseObject> getAllEmployee() {
+    public EmployeeResponse getAllEmployee() {
         log.debug("getAllEmployee start");
+
+        EmployeeResponse employeeResponse = new EmployeeResponse();
 
         List<Employee> empList = employeeRepository.findAll();
         if(empList.isEmpty()){
@@ -73,8 +76,9 @@ public class EmployeeServiceImpl implements EmployeeService{
 
         List<EmployeeResponseObject> responseList = empList.stream().map(emp -> emp.getAsObject()).collect(Collectors.toList());
 
-        log.debug("getAllEmployee end | responseList  {}", responseList);
-        return responseList;
+        employeeResponse.setEmployeeList(responseList);
+        log.debug("getAllEmployee end | employeeResponse  {}", employeeResponse);
+        return employeeResponse;
     }
 
     @Override

@@ -1,8 +1,7 @@
 package com.chaching.service;
 
-import java.util.List;
-
 import com.chaching.model.request.EmployeeRequestObject;
+import com.chaching.model.response.EmployeeResponse;
 import com.chaching.model.response.EmployeeResponseObject;
 
 public interface EmployeeService {
@@ -11,7 +10,7 @@ public interface EmployeeService {
 
     EmployeeResponseObject getSingleEmployee(Long employeeeId);
 
-    List<EmployeeResponseObject> getAllEmployee();
+    EmployeeResponse getAllEmployee();
 
     EmployeeResponseObject updateEmployee(Long employeeId, EmployeeRequestObject employeeRequestObject);
     

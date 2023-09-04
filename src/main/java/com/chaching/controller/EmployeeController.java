@@ -1,8 +1,6 @@
 package com.chaching.controller;
 
 import java.net.HttpURLConnection;
-import java.util.Arrays;
-import java.util.List;
 
 import javax.validation.Valid;
 
@@ -20,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.chaching.exception.ErrorDetails;
 import com.chaching.model.request.EmployeeRequestObject;
+import com.chaching.model.response.EmployeeResponse;
 import com.chaching.model.response.EmployeeResponseObject;
 import com.chaching.service.EmployeeService;
 
@@ -77,13 +76,13 @@ public class EmployeeController {
     @GetMapping("/")
 	@Operation(summary = "Get all employee details", description = "Endpoint to Get all employee details")
 	@ApiResponse(responseCode = HttpURLConnection.HTTP_OK + "", description = "OK", content = {
-		@Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = Arrays.class)) })
-	public ResponseEntity<List<EmployeeResponseObject>> getAllUserInfos()
+		@Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = EmployeeResponse.class)) })
+	public ResponseEntity<EmployeeResponse> getAllUserInfos()
     {
 		log.debug("getAllUserInfos start");
-		List<EmployeeResponseObject> responses = employeeService.getAllEmployee();
+		EmployeeResponse responses = employeeService.getAllEmployee();
 		log.debug("getAllEmployees end | responses = {}", responses);
-		return new ResponseEntity<List<EmployeeResponseObject>>(responses, HttpStatus.OK);
+		return new ResponseEntity<EmployeeResponse>(responses, HttpStatus.OK);
 	}
 
     @PutMapping("/id/{employeeId}")
