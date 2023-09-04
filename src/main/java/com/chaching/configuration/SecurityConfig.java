@@ -55,7 +55,13 @@ public class SecurityConfig {
 
     };
 
-     @Bean
+    public static final String[] EMPLOYEE_URLS = {
+        "/employees/**"
+    };
+
+
+
+    @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
          http
@@ -65,6 +71,7 @@ public class SecurityConfig {
                                  .authorizeHttpRequests()
                                  .antMatchers("/user/create/**", "/token").permitAll()
                                  .antMatchers(AUTH_URLS).permitAll()
+                                 .antMatchers(EMPLOYEE_URLS).permitAll()
                                  .anyRequest()
                                  .authenticated();
                     } catch (Exception e) {

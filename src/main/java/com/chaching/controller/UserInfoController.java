@@ -38,7 +38,7 @@ import lombok.extern.slf4j.Slf4j;
 @RestController
 @Slf4j
 @RequestMapping("/userInfo")
-@Tag(name = "EmployeeApp", description = "Employee endpoints")
+@Tag(name = "User-Info", description = "UserInfo endpoints")
 @ApiResponses(value = { @ApiResponse(responseCode = HttpURLConnection.HTTP_NOT_FOUND
                 + "", description = "Not Found", content = @Content(schema = @Schema(implementation = ErrorDetails.class))),
                 @ApiResponse(responseCode = HttpURLConnection.HTTP_BAD_REQUEST
@@ -54,7 +54,7 @@ public class UserInfoController {
 	@Operation(summary = "Create UserInfo details", description = "Endpoint to create UserInfo Details")
 	@ApiResponse(responseCode = HttpURLConnection.HTTP_CREATED + "", description = "CREATED", content = {
 		@Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = UserInfoResponseObject.class)) })
-	public ResponseEntity<UserInfoResponseObject> createEmployee(
+	public ResponseEntity<UserInfoResponseObject> createUserInfo(
 		@Parameter(name = "UserInfoRequestObject", description = "UserInfoRequestObject is required", required = true, schema = @Schema(implementation = UserInfoRequestObject.class)) @RequestBody @Valid UserInfoRequestObject userInfoRequestObject)
 	{
 		log.debug("createEmployee start | userInfoRequestObject = {}", userInfoRequestObject);

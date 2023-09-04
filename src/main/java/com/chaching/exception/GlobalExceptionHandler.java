@@ -73,4 +73,10 @@ public class GlobalExceptionHandler{
         return new ResponseEntity<Object>(errorDetails, errorDetails.getStatus());
     }
 
+    @ExceptionHandler(EmployeeNotFoundException.class)
+    public ResponseEntity<Object> employeeNotFound(EmployeeNotFoundException ex){
+        ErrorDetails errorDetails = new ErrorDetails(ex.getStatus(), ex.getMessage(), LocalDateTime.now());
+        return new ResponseEntity<Object>(errorDetails, errorDetails.getStatus());
+    }
+
 }
