@@ -59,6 +59,10 @@ public class SecurityConfig {
         "/employees/**"
     };
 
+    public static final String[] ATTACHMET_DOWNLOAD_URLS = {
+        "/file/download/**"
+    };
+
 
 
     @Bean
@@ -72,6 +76,7 @@ public class SecurityConfig {
                                  .antMatchers("/user/create/**", "/token").permitAll()
                                  .antMatchers(AUTH_URLS).permitAll()
                                  .antMatchers(EMPLOYEE_URLS).permitAll()
+                                 .antMatchers(ATTACHMET_DOWNLOAD_URLS).permitAll()
                                  .anyRequest()
                                  .authenticated();
                     } catch (Exception e) {

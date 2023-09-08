@@ -77,5 +77,7 @@ public class AttachmentController {
 
     }
 
+    // while uploading file using postman, Use key -> "file"
+
     
 }
