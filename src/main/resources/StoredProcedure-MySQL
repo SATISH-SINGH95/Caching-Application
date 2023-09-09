@@ -1,0 +1,26 @@
+CREATE PROCEDURE `getSalaryOfStoreProcById`(in p_id varchar(10), out p_salary long)
+BEGIN
+select salary into p_salary from stored_procedure where stored_procedure.id = p_id;
+END
+
+
+=======================================================
+
+CREATE PROCEDURE `getTotalSalayOfTable`(OUT p_total_salary long)
+BEGIN
+select SUM(salary) into p_total_salary from stored_procedure;
+END
+
+=======================================================
+
+CREATE PROCEDURE `getTotalStoreProList`()
+BEGIN
+select * from stored_procedure;
+END
+
+=======================================================
+
+CREATE PROCEDURE `getAllEmployeeProcedure`()
+BEGIN
+select * from employee;
+END
