@@ -3,6 +3,8 @@ package com.chaching.service.impl;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -20,6 +22,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @Service
 @Slf4j
+@Transactional
 public class EmployeeServiceImpl implements EmployeeService{
 
     @Autowired
@@ -69,7 +72,10 @@ public class EmployeeServiceImpl implements EmployeeService{
 
         EmployeeResponse employeeResponse = new EmployeeResponse();
 
-        List<Employee> empList = employeeRepository.findAll();
+
+        //List<Employee> empList = employeeRepository.findAll();
+
+        List<Employee> empList = employeeRepository.getEmployees();
         if(empList.isEmpty()){
             throw new EmployeeNotFoundException(HttpStatus.NOT_FOUND, EmployeeConstants.MESSAGE_EMPLOYEE_LIST_EMPTY);
         };

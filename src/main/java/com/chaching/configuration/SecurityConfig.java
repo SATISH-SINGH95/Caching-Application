@@ -3,6 +3,7 @@ package com.chaching.configuration;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -63,6 +64,12 @@ public class SecurityConfig {
         "/file/download/**"
     };
 
+    public static final String[] STORED_PROCEDURE_URLS = {
+        "/storedProcedure/**"
+    };
+
+    
+
 
 
     @Bean
@@ -77,6 +84,8 @@ public class SecurityConfig {
                                  .antMatchers(AUTH_URLS).permitAll()
                                  .antMatchers(EMPLOYEE_URLS).permitAll()
                                  .antMatchers(ATTACHMET_DOWNLOAD_URLS).permitAll()
+                                 .antMatchers(STORED_PROCEDURE_URLS).permitAll()
+                                 .antMatchers(HttpMethod.DELETE, "/userInfo/id/**").hasRole("ADMIN")
                                  .anyRequest()
                                  .authenticated();
                     } catch (Exception e) {

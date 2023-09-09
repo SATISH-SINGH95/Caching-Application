@@ -5,6 +5,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NamedStoredProcedureQueries;
+import javax.persistence.NamedStoredProcedureQuery;
 import javax.persistence.Table;
 
 import com.chaching.model.response.EmployeeResponseObject;
@@ -18,6 +20,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Data
 @Table(name = "EMPLOYEE")
+@NamedStoredProcedureQueries(@NamedStoredProcedureQuery(name = "getAllEmployeeProcedure", procedureName = "getAllEmployeeProcedure"))
 public class Employee {
 
     @Column(name = "EMPLOYEE_ID")
