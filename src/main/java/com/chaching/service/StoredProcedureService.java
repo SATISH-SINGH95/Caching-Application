@@ -15,4 +15,6 @@ public interface StoredProcedureService {
 
     List<StoredProcedureResponse> getTotalStoreProList();
 
+    List<StoredProcedureResponse> getListOfEmployeesByAddress(String address);
+
 }

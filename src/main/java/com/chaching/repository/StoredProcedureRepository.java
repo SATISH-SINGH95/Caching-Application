@@ -19,5 +19,8 @@ public interface StoredProcedureRepository extends JpaRepository<StoredProcedure
 
     @Procedure("getTotalStoreProList")
     public List<StoredProcedureEntity> getAllStoredProcList();
+
+    @Procedure("getEmployeesByAddress")
+    public List<StoredProcedureEntity> getListOfEmployeesByAddress(String address);
     
 }
