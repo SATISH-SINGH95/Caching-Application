@@ -12,10 +12,8 @@ public interface StoredProcedureRepository extends JpaRepository<StoredProcedure
     @Procedure("getSalaryOfStoreProcById")
     public Long getSalaryById(Long id);
 
-
     @Procedure("getTotalSalayOfTable")
     public Long getTotalSalayOfTable();
-
 
     @Procedure("getTotalStoreProList")
     public List<StoredProcedureEntity> getAllStoredProcList();
