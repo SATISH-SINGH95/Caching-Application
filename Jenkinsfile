@@ -1,24 +1,29 @@
-
 pipeline{
-
     agent any
-
+    tool{
+        maven 'MAVEN_HOME'
+    }
     stages{
-        stage('Build'){
+        stage("mvn clean install"){
             steps{
-                echo 'Building..'
+                bat 'mvn clean install'
             }
         }
-        stage('Test'){
+    }
+        stage("deploy to container"){
             steps{
-                echo 'Testing..'
+                bat "deploy adapters: [tomcat9(credentialsId: '84e56306-0e3d-4847-98b0-c515a2a58672', path: '', url: 'http://localhost:8081/')], contextPath: 'Caching', war: '**/*.war'"
             }
         }
-        stage('Deploy'){
-            steps{
-                echo 'Deploying..'
-            }
+    post{
+        always{
+            echo 'Always message always be displayed'
         }
-
+        success{
+            echo 'This message will be displayed after successful execution of each stages'
+        }
+        failure{
+            echo 'This message will be displayed if any of stages failed to execute'
+        }
     }
 }
