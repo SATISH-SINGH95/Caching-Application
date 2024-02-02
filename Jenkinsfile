@@ -11,7 +11,7 @@ pipeline{
         }
         stage("deploy to container"){
             steps{
-                bat "deploy adapters: [tomcat9(credentialsId: '84e56306-0e3d-4847-98b0-c515a2a58672', path: '', url: 'http://localhost:8081/')], contextPath: 'Caching', war: '**/*.war'"
+                 deploy adapters: [tomcat9(credentialsId: '84e56306-0e3d-4847-98b0-c515a2a58672', path: '', url: 'http://localhost:8081/')], contextPath: 'Caching', war: '**/*.war'
             }
         }
     }
