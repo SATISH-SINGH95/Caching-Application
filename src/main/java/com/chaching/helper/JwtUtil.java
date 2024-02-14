@@ -1,5 +1,6 @@
 package com.chaching.helper;
 
+import java.text.ParseException;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -8,11 +9,18 @@ import java.util.function.Function;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
+import com.chaching.model.response.JwtDecodeResponse;
+import com.nimbusds.jwt.JWT;
+import com.nimbusds.jwt.JWTClaimsSet;
+import com.nimbusds.jwt.JWTParser;
+
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import lombok.extern.slf4j.Slf4j;
 
 @Component
+@Slf4j
 public class JwtUtil {
 
     public static final long serialVersionID = -2550185165626007488L;
@@ -58,6 +66,23 @@ public class JwtUtil {
     public Boolean validateToken(String token, UserDetails userDetails) {
         final String username = getUsernameFromToken(token);
         return (username.equals(userDetails.getUsername()) && !isTokenExpired(token));
+    }
+
+    public JwtDecodeResponse getSubjectIdFromToken(String token) {
+
+        JwtDecodeResponse response = new JwtDecodeResponse();
+
+        try {
+            JWT jwt = JWTParser.parse(token);
+            JWTClaimsSet jwtClaimsSet = jwt.getJWTClaimsSet();
+            String subject = jwtClaimsSet.getSubject();
+            response.setSubjectId(subject);
+            return response;
+        } catch (ParseException e) {
+            log.error("getSubjectIdFromToken | Exception ", e);
+        }
+        return response;
+
     }
 
 }

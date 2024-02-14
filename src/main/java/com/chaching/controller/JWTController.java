@@ -8,12 +8,15 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.chaching.helper.JwtUtil;
 import com.chaching.model.request.JwtRequest;
+import com.chaching.model.response.JwtDecodeResponse;
 import com.chaching.model.response.JwtResponse;
 import com.chaching.springService.CustomUserDetailService;
 
@@ -50,6 +53,14 @@ public class JWTController {
         String token = jwtUtil.generateToken(userDetails);
 
         return new ResponseEntity<>(new JwtResponse(token), HttpStatus.OK);
+
+    }
+
+    @GetMapping("/token/decode/{token}")
+    public ResponseEntity<JwtDecodeResponse> getSubjectId(@PathVariable String token){
+
+        JwtDecodeResponse subjectId = jwtUtil.getSubjectIdFromToken(token);
+        return new ResponseEntity<>(subjectId, HttpStatus.OK);
 
     }
 }
