@@ -73,9 +73,9 @@ public class EmployeeServiceImpl implements EmployeeService{
         EmployeeResponse employeeResponse = new EmployeeResponse();
 
 
-        //List<Employee> empList = employeeRepository.findAll();
+        List<Employee> empList = employeeRepository.findAll();
 
-        List<Employee> empList = employeeRepository.getEmployees();
+        //List<Employee> empList = employeeRepository.getEmployees();
         if(empList.isEmpty()){
             throw new EmployeeNotFoundException(HttpStatus.NOT_FOUND, EmployeeConstants.MESSAGE_EMPLOYEE_LIST_EMPTY);
         };

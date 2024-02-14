@@ -83,6 +83,7 @@ public class SecurityConfig {
                                  .antMatchers("/user/create/**", "/token").permitAll()
                                  .antMatchers(AUTH_URLS).permitAll()
                                  .antMatchers(EMPLOYEE_URLS).permitAll()
+                                 .antMatchers("/userInfo/**").permitAll()
                                  .antMatchers(ATTACHMET_DOWNLOAD_URLS).permitAll()
                                  .antMatchers(STORED_PROCEDURE_URLS).permitAll()
                                  .antMatchers(HttpMethod.DELETE, "/userInfo/id/**").hasRole("ADMIN")

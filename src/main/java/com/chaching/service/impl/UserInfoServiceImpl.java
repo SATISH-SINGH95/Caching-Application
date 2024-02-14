@@ -1,6 +1,7 @@
 package com.chaching.service.impl;
 
 import java.time.LocalDateTime;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -88,6 +89,7 @@ public class UserInfoServiceImpl implements UserInfoService{
 
     @Override
     public PageResponse getAllUserInfo(int pageNo, int pageSize, String sortBy, String sortDir) {
+
         log.debug("getAllUserInfo start | pageNo = {}, pageSize = {}, sortBy = {}, sortDir = {}", pageNo, pageSize, sortBy, sortDir);
 
         Sort sort = sortDir.equalsIgnoreCase(Sort.Direction.ASC.name()) ? Sort.by(sortBy).ascending() : Sort.by(sortBy).descending();
