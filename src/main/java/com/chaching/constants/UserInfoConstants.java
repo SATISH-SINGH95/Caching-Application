@@ -13,8 +13,10 @@ public class UserInfoConstants {
     public static final String ATTACHMENT_NOT_FOUND = "ATTACHMENT_NOT_FOUND";
     public static final String MESSAGE_USER_ALREADY_EXIST = "USER_ALREADY_EXIST";
     public static final String MESSAGE_USER_REGISTERED_SUCCESSFULLY = "USER_REGISTERED_SUCCESSFULLY";
+    public static final String MESSAGE_INVALID_TOKEN = "INVALID_TOKEN";
 
 
-    
+
+
 
 }
