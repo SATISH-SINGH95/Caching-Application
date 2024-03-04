@@ -1,9 +1,14 @@
 package com.chaching.configuration;
 
+import java.util.Collections;
+
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
+import org.springframework.lang.Nullable;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -13,6 +18,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
 
 import com.chaching.springService.CustomUserDetailService;
 
@@ -22,11 +29,11 @@ public class SecurityConfig {
     @Autowired
     private CustomUserDetailService customUserDetailService;
 
-    
+
     @Autowired
     private JwtAuthenticationFilter jwtFilter;
 
-    
+
     @Bean
     public PasswordEncoder passwordEncoder(){
         return new BCryptPasswordEncoder();
@@ -68,32 +75,48 @@ public class SecurityConfig {
         "/storedProcedure/**"
     };
 
-    
+
 
 
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
-         http
-                 .csrf(csrf -> {
+        http
+        // CORS configuration starts from here
+                .cors(cors -> cors.configurationSource(new CorsConfigurationSource() {
+
+                    @Override
+                    @Nullable
+                    public CorsConfiguration getCorsConfiguration(HttpServletRequest request) {
+                        CorsConfiguration cors = new CorsConfiguration();
+                        cors.setAllowedOrigins(Collections.singletonList("http://localhost:4200")); // allow this url to acces the apis of this app
+                        cors.setAllowedMethods(Collections.singletonList("*"));
+                        cors.setAllowedHeaders(Collections.singletonList("*"));
+                        cors.setAllowCredentials(true);
+                        cors.setMaxAge(3600L); // 1 hours
+                        return cors;
+                    }
+                }))
+                //// CORS configuration ends here
+                .csrf(csrf -> {
                     try {
                         csrf.disable()
-                                 .authorizeHttpRequests()
-                                 .antMatchers("/user/create/**", "/token").permitAll()
-                                 .antMatchers(AUTH_URLS).permitAll()
-                                 .antMatchers(EMPLOYEE_URLS).permitAll()
-                                 .antMatchers("/userInfo/**").permitAll()
-                                 .antMatchers(ATTACHMET_DOWNLOAD_URLS).permitAll()
-                                 .antMatchers(STORED_PROCEDURE_URLS).permitAll()
-                                 .antMatchers(HttpMethod.DELETE, "/userInfo/id/**").hasRole("ADMIN")
-                                 .anyRequest()
-                                 .authenticated();
+                                .authorizeHttpRequests(requests -> requests
+                                        .antMatchers("/user/create/**", "/token").permitAll()
+                                        .antMatchers(AUTH_URLS).permitAll()
+                                        .antMatchers(EMPLOYEE_URLS).permitAll()
+                                        .antMatchers("/userInfo/**").permitAll()
+                                        .antMatchers(ATTACHMET_DOWNLOAD_URLS).permitAll()
+                                        .antMatchers(STORED_PROCEDURE_URLS).permitAll()
+                                        .antMatchers(HttpMethod.DELETE, "/userInfo/id/**").hasRole("ADMIN")
+                                        .anyRequest()
+                                        .authenticated());
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
                 })
-                 .sessionManagement(management -> management.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
+                .sessionManagement(management -> management.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
 
         http.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
 
