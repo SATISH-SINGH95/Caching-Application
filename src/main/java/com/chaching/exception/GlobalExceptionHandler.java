@@ -34,8 +34,8 @@ public class GlobalExceptionHandler{
 
     //     ErrorDetails errorDetails = new ErrorDetails(HttpStatus.BAD_REQUEST, errorMessages.toString(), LocalDateTime.now());
     //     return new ResponseEntity<Object>(errorDetails,errorDetails.getStatus());
-    // } 
-    
+    // }
+
     @ExceptionHandler(MethodArgumentNotValidException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ResponseEntity<Object> handleMethodArgumentNoSupportedException(MethodArgumentNotValidException ex, WebRequest request){
@@ -46,7 +46,7 @@ public class GlobalExceptionHandler{
 
        MethodArgumentError error = new MethodArgumentError(HttpStatus.BAD_REQUEST, errorMap, LocalDateTime.now());
         return new ResponseEntity<Object>(error, HttpStatus.BAD_REQUEST);
-    }  
+    }
 
     @ExceptionHandler(BadRequestException.class)
     public ResponseEntity<Object> badRequestExceptionMethod(BadRequestException ex){
@@ -75,6 +75,12 @@ public class GlobalExceptionHandler{
 
     @ExceptionHandler(EmployeeNotFoundException.class)
     public ResponseEntity<Object> employeeNotFound(EmployeeNotFoundException ex){
+        ErrorDetails errorDetails = new ErrorDetails(ex.getStatus(), ex.getMessage(), LocalDateTime.now());
+        return new ResponseEntity<Object>(errorDetails, errorDetails.getStatus());
+    }
+
+    @ExceptionHandler(ValidationException.class)
+    public ResponseEntity<Object> validationException(ValidationException ex){
         ErrorDetails errorDetails = new ErrorDetails(ex.getStatus(), ex.getMessage(), LocalDateTime.now());
         return new ResponseEntity<Object>(errorDetails, errorDetails.getStatus());
     }
