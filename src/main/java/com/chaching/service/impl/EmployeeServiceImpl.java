@@ -33,7 +33,7 @@ public class EmployeeServiceImpl implements EmployeeService{
         log.debug("createEmployee start | employeeRequestObject = {}", employeeRequestObject);
 
         EmployeeResponseObject response = null;
-        
+
         Employee employee = new Employee();
         employee.setEmployeeName(employeeRequestObject.getEmployeeName());
         employee.setEmployeeAddress(employeeRequestObject.getEmployeeAddress());
@@ -53,7 +53,7 @@ public class EmployeeServiceImpl implements EmployeeService{
 
     @Override
     public EmployeeResponseObject getSingleEmployee(Long employeeId) {
-        log.debug("getSingleEmployee start | employeeId = {}", employeeId);
+        //log.debug("getSingleEmployee start | employeeId = {}", employeeId);
 
         EmployeeResponseObject response = null;
 
@@ -62,7 +62,7 @@ public class EmployeeServiceImpl implements EmployeeService{
         );
         response = employee.getAsObject();
 
-        log.debug("getSingleEmployee end | response  {}", response);
+        //log.debug("getSingleEmployee end | response  {}", response);
         return response;
     }
 
@@ -104,9 +104,9 @@ public class EmployeeServiceImpl implements EmployeeService{
         Employee updatedEmployee = employeeRepository.save(employee);
 
         response = updatedEmployee.getAsObject();
-        
+
         log.debug("updateEmployee end | response  {}", response);
         return response;
     }
-    
+
 }
