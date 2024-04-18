@@ -67,9 +67,9 @@ public class EmployeeController {
 	public ResponseEntity<EmployeeResponseObject> getSingleEmployee(
 		@Parameter(name = "employeeId", description = "employeeId is required", required = true, schema = @Schema(implementation = Long.class)) @PathVariable final Long employeeId)
 		{
-		//log.debug("getSingleEmployee start | userInfoId = {}", employeeId);
+		log.debug("getSingleEmployee start | userInfoId = {}", employeeId);
 		EmployeeResponseObject response = employeeService.getSingleEmployee(employeeId);
-		//log.debug("getSingleEmployee end | EmployeeResponseObject = {}", response);
+		log.debug("getSingleEmployee end | EmployeeResponseObject = {}", response);
 		return new ResponseEntity<EmployeeResponseObject>(response, HttpStatus.OK);
 	}
 

@@ -53,7 +53,7 @@ public class EmployeeServiceImpl implements EmployeeService{
 
     @Override
     public EmployeeResponseObject getSingleEmployee(Long employeeId) {
-        //log.debug("getSingleEmployee start | employeeId = {}", employeeId);
+        log.debug("getSingleEmployee start | employeeId = {}", employeeId);
 
         EmployeeResponseObject response = null;
 
@@ -62,7 +62,7 @@ public class EmployeeServiceImpl implements EmployeeService{
         );
         response = employee.getAsObject();
 
-        //log.debug("getSingleEmployee end | response  {}", response);
+        log.debug("getSingleEmployee end | response  {}", response);
         return response;
     }
 
