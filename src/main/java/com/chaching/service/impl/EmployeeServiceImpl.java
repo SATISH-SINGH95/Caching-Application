@@ -1,11 +1,13 @@
 package com.chaching.service.impl;
 
 import java.util.List;
+import java.util.Locale;
 import java.util.stream.Collectors;
 
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
@@ -27,6 +29,9 @@ public class EmployeeServiceImpl implements EmployeeService{
 
     @Autowired
     private EmployeeRepository employeeRepository;
+
+    @Autowired
+    private MessageSource messageSource;
 
     @Override
     public EmployeeResponseObject createEmployee(EmployeeRequestObject employeeRequestObject) {
@@ -58,7 +63,7 @@ public class EmployeeServiceImpl implements EmployeeService{
         EmployeeResponseObject response = null;
 
         Employee employee = employeeRepository.findById(employeeId).orElseThrow(
-            () -> new EmployeeNotFoundException(HttpStatus.NOT_FOUND, EmployeeConstants.MESSAGE_EMPLOYEE_NOT_FOUND)
+            () -> new EmployeeNotFoundException(HttpStatus.NOT_FOUND, messageSource.getMessage(EmployeeConstants.MESSAGE_EMPLOYEE_NOT_FOUND, null, Locale.getDefault()))
         );
         response = employee.getAsObject();
 
