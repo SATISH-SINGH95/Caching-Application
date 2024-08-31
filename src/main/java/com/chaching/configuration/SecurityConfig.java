@@ -75,6 +75,10 @@ public class SecurityConfig {
         "/storedProcedure/**"
     };
 
+    public static final String[] USER_INFO_URLS = {
+        "/userInfo/excel"
+    };
+
 
 
 
@@ -106,6 +110,7 @@ public class SecurityConfig {
                                         .antMatchers("/user/create/**", "/token").permitAll()
                                         .antMatchers(AUTH_URLS).permitAll()
                                         .antMatchers(EMPLOYEE_URLS).permitAll()
+                                        .antMatchers(USER_INFO_URLS).permitAll()
                                         .antMatchers("/userInfo/**").permitAll()
                                         .antMatchers(ATTACHMET_DOWNLOAD_URLS).permitAll()
                                         .antMatchers(STORED_PROCEDURE_URLS).permitAll()

@@ -2,6 +2,7 @@ package com.chaching.controller;
 
 import java.net.HttpURLConnection;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -149,5 +150,16 @@ public class UserInfoController {
 	}
 
 
-    
+	@GetMapping("/excel")
+	public void exportRecordToExcel(HttpServletResponse response) throws Exception{
+		response.setContentType("application/octet-stream");
+		String headerKey = "Content-Disposition";
+		String headerValue = "attachment;filename=userInfo.xls";
+		response.setHeader(headerKey, headerValue);
+
+		userInfoService.exportRecordToExcel(response);
+	}
+
+
+
 }

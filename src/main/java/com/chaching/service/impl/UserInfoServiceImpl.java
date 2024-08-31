@@ -1,10 +1,17 @@
 package com.chaching.service.impl;
 
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServletResponse;
+
+import org.apache.poi.hssf.usermodel.HSSFRow;
+import org.apache.poi.hssf.usermodel.HSSFSheet;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
@@ -72,7 +79,7 @@ public class UserInfoServiceImpl implements UserInfoService{
         if(userStatus == null){
             throw new BadRequestException(HttpStatus.BAD_REQUEST,UserInfoConstants.MESSAGE_INVALID_REQUEST);
         }
-        
+
         userInfoEntities = userInfoRepository.findByUserStatus(userStatus);
 
         if(userInfoEntities == null || userInfoEntities.isEmpty()){
@@ -96,7 +103,7 @@ public class UserInfoServiceImpl implements UserInfoService{
         Pageable pageable = PageRequest.of(pageNo, pageSize, sort);
         Page<UserInfo> page = userInfoRepository.findAll(pageable);
         List<UserInfo> userInfos = page.getContent();
-        
+
         if(userInfos == null || userInfos.isEmpty()){
             throw new EntityNotFoundException(HttpStatus.NOT_FOUND, UserInfoConstants.MESSAGE_USER_INFO_NOT_FOUND);
         }
@@ -112,7 +119,7 @@ public class UserInfoServiceImpl implements UserInfoService{
         response.setTotalPages(page.getTotalPages());
         response.setPageSize(page.getSize());
         response.setPageNo(page.getNumber());
-        
+
         log.debug("getAllUserInfo end | PageResponse = {}", response);
         return response;
 
@@ -145,7 +152,7 @@ public class UserInfoServiceImpl implements UserInfoService{
 
         UserInfo user = userInfoRepository.findById(userInfoId).orElseThrow(
             () -> new EntityNotFoundException(HttpStatus.NOT_FOUND, UserInfoConstants.MESSAGE_USER_INFO_ID_NOT_FOUND));
-        
+
         user.setUpdateDate(LocalDateTime.now());
         user.setUserAddress(userInfoRequestObject.getUserAddress());
 
@@ -169,7 +176,7 @@ public class UserInfoServiceImpl implements UserInfoService{
 
         log.debug("deleteUserInfo end ", "User Deleted Successfully");
 
-        
+
     }
 
     @Override
@@ -183,7 +190,43 @@ public class UserInfoServiceImpl implements UserInfoService{
         userInfo.setUpdateDate(LocalDateTime.now());
         userInfoRepository.save(userInfo);
         log.debug("makeUserInactive end | userStatus {}", "User is Inactive now !");
-       
+
     }
-    
+
+    @Override
+    public void exportRecordToExcel(HttpServletResponse response) throws Exception {
+        List<UserInfo> users = userInfoRepository.findAll();
+
+        HSSFWorkbook workbook = new HSSFWorkbook();
+        HSSFSheet sheet = workbook.createSheet("User_Info"); // Name of the sheet. Anything you can put.
+        HSSFRow headingRow = sheet.createRow(0); // Heading row always starts with 0.
+        headingRow.createCell(0).setCellValue("User_Info_Id");
+        headingRow.createCell(1).setCellValue("created_date");
+        headingRow.createCell(2).setCellValue("update_date");
+        headingRow.createCell(3).setCellValue("user_address");
+        headingRow.createCell(4).setCellValue("user_email");
+        headingRow.createCell(5).setCellValue("user_status");
+        headingRow.createCell(6).setCellValue("user_name");
+
+        int dataRowIndex = 1;
+
+        for(UserInfo user : users){
+            HSSFRow dataRow = sheet.createRow(dataRowIndex);
+            dataRow.createCell(0).setCellValue(user.getUserInfoId());
+            dataRow.createCell(1).setCellValue(user.getCreatedDate());
+            dataRow.createCell(2).setCellValue(user.getUpdateDate());
+            dataRow.createCell(3).setCellValue(user.getUserAddress());
+            dataRow.createCell(4).setCellValue(user.getUserEmail());
+            dataRow.createCell(5).setCellValue(user.getUserStatus());
+            dataRow.createCell(6).setCellValue(user.getUsername());
+
+            dataRowIndex++;
+        }
+        ServletOutputStream outputStream = response.getOutputStream();
+        workbook.write(outputStream);
+        workbook.close();
+        outputStream.close();
+
+    }
+
 }

@@ -1,5 +1,7 @@
 package com.chaching.service;
 
+import javax.servlet.http.HttpServletResponse;
+
 import com.chaching.model.request.UserInfoRequestObject;
 import com.chaching.model.response.PageResponse;
 import com.chaching.model.response.UserInfoResponse;
@@ -20,5 +22,7 @@ public interface UserInfoService {
     void deleteUserInfo(long userInfo);
 
     void makeUserInactive(Long userInfoId);
-    
+
+    void exportRecordToExcel(HttpServletResponse response) throws Exception;
+
 }
