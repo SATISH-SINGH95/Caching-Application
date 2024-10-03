@@ -1,0 +1,13 @@
+<configuration>
+    <springProperty name="APP_NAME" source="spring.application.name"/>
+
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%d{dd-MM-yyyy HH:mm:ss.SSS Z}  %-5level ${PID} --- [${APP_NAME}] [%thread] [CID: %X{correlationId}] %logger{36}    : %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <root level="INFO">
+        <appender-ref ref="CONSOLE" />
+    </root>
+</configuration>
